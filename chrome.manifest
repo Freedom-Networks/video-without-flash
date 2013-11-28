@@ -1,0 +1,6 @@
+content   vwof              chrome/content/  contentaccessible=yes
+skin      vwof  classic/1.0 chrome/skin/
+locale    vwof  en-US       chrome/locale/en-US/
+resource  vwof              modules/
+
+overlay chrome://browser/content/browser.xul  chrome://vwof/content/browserOverlay.xul

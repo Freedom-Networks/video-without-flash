@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<overlay id="vwof-browser-overlay"
+	 xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script type="application/x-javascript"
+	  src="chrome://vwof/content/browserOverlay.js" />
+  <script type="application/x-javascript"
+	  src="chrome://vwof/content/utils.js" />
+  <script type="application/x-javascript"
+	  src="chrome://vwof/content/player.js" />
+  <script type="application/x-javascript"
+	  src="chrome://vwof/content/onload.js" />
+
+  <script type="application/x-javascript">
+    function oncommand_openvideo(){
+      var cw = getBrowser().contentWindow;
+      vwofChrome.BrowserOverlay.openVideo(cw);
+    }
+  </script>
+	
+  <keyset>
+    <key id="vwof-key-open-video" modifiers="alt" key="w" oncommand="oncommand_openvideo();"/>
+  </keyset>
+
+  <popup id="contentAreaContextMenu">
+    <menuitem id="vwof-open-video" key="vwof-key-open-video" label="Watch video without flash" oncommand="oncommand_openvideo(cw);"/>
+  </popup>
+
+</overlay>

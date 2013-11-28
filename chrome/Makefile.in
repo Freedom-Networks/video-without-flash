@@ -1,0 +1,10 @@
+source_root := chrome
+sources := $(wildcard $(source_root)/content/*.js) \
+               $(wildcard $(source_root)/content/*.xul) \
+               $(wildcard $(source_root)/content/*.xml) \
+               $(wildcard $(source_root)/content/*.css) \
+               $(wildcard $(source_root)/skin/*.css) \
+               $(wildcard $(source_root)/skin/*.png) \
+               $(wildcard $(source_root)/skin/*.svg) \
+               $(wildcard $(source_root)/locale/*/*.dtd) \
+               $(wildcard $(source_root)/locale/*/*.properties)

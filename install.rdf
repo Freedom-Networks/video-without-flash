@@ -7,7 +7,7 @@
     <em:id>vwof@drev.com</em:id>
     <em:name>Video WithOut Flash</em:name>
     <em:description>Watch videos without flash</em:description>
-    <em:version>1.0</em:version>
+    <em:version>1.1</em:version>
     <em:creator>Drevet Olivier</em:creator>
     <em:homepageURL>http://olivier.drevet.free.fr</em:homepageURL>
     <em:type>2</em:type>
@@ -18,7 +18,7 @@
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
         <em:minVersion>3.0</em:minVersion>
-        <em:maxVersion>25.0</em:maxVersion>
+        <em:maxVersion>26.0</em:maxVersion>
       </Description>
     </em:targetApplication>
   </Description>

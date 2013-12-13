@@ -71,7 +71,10 @@ vwofChrome.BrowserOverlay = {
     openVideo:function(cw) {
 
 	//check if the content window is defined
-	if (!cw || cw.frameElement || !cw.document){
+	if (!cw
+	    //|| cw.frameElement
+	    || !cw.document
+	   ){
 	    return;
 	}
 
@@ -104,7 +107,7 @@ vwofChrome.BrowserOverlay = {
 	xmlhttp.send();
 	return xmlhttp.responseText;
     },
-
+    
     /**
        utility function that converts url vars into a js associative array
     */
@@ -120,6 +123,7 @@ vwofChrome.BrowserOverlay = {
 	return arr_assoc;
     }
 };
+
 
 /**
    Listeners

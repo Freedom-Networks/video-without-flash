@@ -4,3 +4,4 @@ locale    vwof  en-US       chrome/locale/en-US/
 resource  vwof              modules/
 
 overlay chrome://browser/content/browser.xul  chrome://vwof/content/browserOverlay.xul
+style chrome://global/content/customizeToolbar.xul chrome://vwof/skin/toolbar-button.css

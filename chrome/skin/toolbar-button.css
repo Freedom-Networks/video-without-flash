@@ -1,0 +1,14 @@
+/*  skin/toolbar-button.css  */
+
+#vwof-button {
+  list-style-image: url("chrome://vwof/skin/video-icon_24.png");
+}
+
+toolbar[iconsize="small"] #vwof-button {
+  list-style-image: url("chrome://vwof/skin/video-icon_14.png");
+}
+
+#vwof-button:checked{
+    background-color:#FF0000;
+}
+

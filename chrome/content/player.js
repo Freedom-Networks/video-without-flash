@@ -139,7 +139,6 @@ vwofPlayer = {
 	node_link_new_tab.setAttribute('id', 'vwof_link_new_tab_'+player_id);
 	node_link_new_tab.setAttribute('onclick', 'event.stopPropagation();');
 	node_link_new_tab.setAttribute('href', video_info.videos[0].url);
-	node_link_new_tab.setAttribute('style', 'top:1px;right:1px;');
 	node_link_new_tab.setAttribute('target', '_blank');
 	var a_content_new_tab = doc.createTextNode('Open in a new tab');
 	node_link_new_tab.appendChild(a_content_new_tab);

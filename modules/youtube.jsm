@@ -1,8 +1,9 @@
 var parser = {
     BASE_URI : 'youtube.com',
     API_GET_VIDEO:'http://youtube.com/get_video_info?video_id=VIDEO_ID',
+    //cw:undefined,
     parse: function(cw) {
-	 
+
 	var video_info = [];
 	if(cw.location.hostname == 'www.'+this.BASE_URI){
 	    video_info = this.parse_site(cw);
@@ -32,28 +33,37 @@ var parser = {
 	    throw('cannot retreive ID of a '+this.BASE_URI+' video on '+doc.URL);
 	}
 
+	var player_api = doc.getElementById('player-api');
+	if(player_api){
+	    player_api.setAttribute('id', 'vwof_player-api');  //prevent the player-api div to be erased by the missing plugin tv-static message
+	    if(vwofChrome.youtubeUtils.yt_is_wide()){
+	      player_api.setAttribute("style", "margin:auto;");  //center the player
+	    }
+	    //this.cw = cw;
+	}
+	else {
+	    //cw = this.cw;
+	    player_api = doc.getElementById('vwof_player-api');  //the page has previously been proceeded
+
+	    //alert(doc.URL + "\n" + doc.documentElement.textContent);
+	}
+
+	//remove all child from the player api, in case we need to load a new video
+	while (player_api.firstChild) {
+	    player_api.removeChild(player_api.firstChild);
+	}
+
+	var player = doc.createElement('div');
+	player_api.appendChild(player);
+	
 	var api_video_uri = this.API_GET_VIDEO.replace('VIDEO_ID', id);
 	var data = vwofChrome.BrowserOverlay.get(api_video_uri);
-
 	var video_data = this.parse_data(data);
-
-	//get the player, the id depends on the installation or not of the flash plugin and when this script is applied
-	var player;
-	player = doc.getElementById('player-api');
-	if(!player)player = doc.getElementById('player');                    //works but break the comments loading
-	if(!player) player = doc.getElementById('player-unavailable');       //if the parser is called after everything is loaded and the flash plugin is not installed
-	if(!player) player = doc.getElementById('movie_player');
-	if(!player){return;}
 	video_data['player'] = player;
 	
 	//this div overlap with the player when the screen resolution is low
 	var guide =  doc.getElementById('guide');
 	if(guide)guide.style.display = 'none';
-
-
-	//prevent the side bar (video sugestions) to overlap with the video 
-	var sidebar = doc.getElementById('watch7-sidebar');
-	if(sidebar)sidebar.style.display = 'none';
 	
 	video_info.push(video_data);
 	

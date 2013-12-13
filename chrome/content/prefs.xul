@@ -1,29 +1,26 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
 <prefwindow id="vwofPrefWindow" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <prefpane id="vwofPrefPane" label="Options">
+  <prefpane id="vwof_pref_general" label="General">
+  
     <preferences>
       <preference id="extensions.vwof.activate_onload" name="extensions.vwof.activate_onload" type="bool"/>
-      <preference id="extensions.vwof.prefered_quality" name="extensions.vwof.prefered_quality" type="string" />
-      <preference id="extensions.vwof.prefered_format" name="extensions.vwof.prefered_format" type="string" />
-      <preference id="extensions.vwof.modules" name="extensions.vwof.modules" type="string" />    
       <preference id="plugins.hide_infobar_for_missing_plugin" name="plugins.hide_infobar_for_missing_plugin" type="bool"/>
+      <preference id="full-screen-api.approval-required" name="full-screen-api.approval-required" type="bool"/>
     </preferences>
 
-    <label value="general" />
     <checkbox label="Activate on page load" preference="extensions.vwof.activate_onload"/>
     <checkbox label="Disable missing plugin warnings" preference="plugins.hide_infobar_for_missing_plugin"/>
+    <checkbox label="Display approval message when fullscreen" preference="full-screen-api.approval-required"/>
+    
+  </prefpane>
 
-    <label value="Prefered quality" control="prefered_quality" />    
-    <menulist id="prefered_quality" preference="extensions.vwof.prefered_quality" preference-editable="true">
-      <menupopup>
-	<menuitem label="hd1080" value="hd1080"/>
-	<menuitem label="hd720" value="hd720"/>
-	<menuitem label="medium" value="medium"/>
-	<menuitem label="low" value="low"/>	
-      </menupopup>
-    </menulist>
-
+  <prefpane id="vwof_pref_prefered_format" label="Prefered format">
+    <preferences>
+      <preference id="extensions.vwof.prefered_quality" name="extensions.vwof.prefered_quality" type="string" />
+      <preference id="extensions.vwof.prefered_format" name="extensions.vwof.prefered_format" type="string" />
+    </preferences>
+    
     <label value="Prefered format" control="prefered_format" />
     <menulist id="prefered_format" preference="extensions.vwof.prefered_format" preference-editable="true">
       <menupopup>
@@ -34,36 +31,29 @@
       </menupopup>
     </menulist>
 
-    <!-- List modules with a checkbox to activate/deactivate each one-->
-    <label value="Modules (parser for sites / embed videos)"/>
-    <script>
-      var prefPane = document.getElementById('vwofPrefPane');
-      var s_modules = document.getElementById('extensions.vwof.modules').value;
-      modules = JSON.parse(s_modules);
-
-      for(var key_module in modules){
-        var element = document.createElement('checkbox');
-	element.setAttribute('label', key_module);
-	element.setAttribute('checked', modules[key_module]?'true':'false');
-	element.setAttribute('oncommand', "update_module(event)");
-        prefPane.appendChild(element);
-      }
-
-      function update_module(event){
-        var l = event.target.getAttribute('label');
-	var c = event.target.hasAttribute('checked')?1:0;
-
-	modules[l] = c;
-	var s_modules = JSON.stringify(modules);
-
-	var prefManager = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
-	prefManager.setCharPref("extensions.vwof.modules", s_modules);
-	
-      }
-
-    </script>
+    <label value="Prefered quality" control="prefered_quality" />    
+    <menulist id="prefered_quality" preference="extensions.vwof.prefered_quality" preference-editable="true">
+      <menupopup>
+	<menuitem label="hd1080" value="hd1080"/>
+	<menuitem label="hd720" value="hd720"/>
+	<menuitem label="medium" value="medium"/>
+	<menuitem label="low" value="low"/>	
+      </menupopup>
+    </menulist>
+    
+  </prefpane>
+  
+  <prefpane id="vwof_pref_modules" label="modules">
+    <preferences>
+      <preference id="extensions.vwof.modules" name="extensions.vwof.modules" type="string"/>
+    </preferences>
+ 
+    <checkbox id="vwof_yt_wide" label="Use YouTube wide view" oncommand="vwofChrome.youtubeUtils.toggle_yt_wide(event)"/>
 
   </prefpane>
+  
+  <script src="youtube_utils.js"/> 
+  <script src="list_modules.js"/>
 
 </prefwindow>
 

@@ -93,7 +93,7 @@ install: $(build_dir) $(xpi_built)
 	@echo "Installing in profile folder: $(profile_location)"
 	@if [ ! -x $(profile_location) ]; \
   then \
-    mkdir $(profile_location); \
+    mkdir  $(profile_location); \
   fi
 	@cp -Rf  $(build_dir)/* $(profile_location)
 	@echo "Installing in profile folder. Done!"
@@ -105,16 +105,16 @@ $(xpi_file): $(build_dir) $(xpi_built)
 	@echo "Creating XPI file. Done!"
 
 $(build_dir)/$(modules_dir)/%: $(modules_dir)/% $(build_dir)/$(modules_dir)
-	@echo Copy
+	@echo adding $< to $@
 	@cp -f $< $@
 
 $(build_dir)/$(preferences_dir)/%: \
   $(preferences_dir)/% $(build_dir)/$(preferences_dir)
-	@echo Copy
+	@echo adding $< to $@
 	@cp -f $< $@
 
 $(build_dir)/$(defaults_dir)/%: $(defaults_dir)/% $(build_dir)/$(defaults_dir)
-	@echo Copy
+	@echo adding $< to $@
 	@cp -f $< $@
 
 $(build_dir)/$(preferences_dir): $(build_dir)/$(defaults_dir)
@@ -132,6 +132,11 @@ $(build_dir)/$(defaults_dir):
 #This is the default target
 $(build_dir)/%: %
 	@echo build dir target $< to $@
+	@if [ ! -x $@ ]; \
+  then \
+    mkdir --parents $@; \
+  fi
+
 	@cp -f  $< $@
 
 $(build_dir):

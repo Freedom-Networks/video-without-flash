@@ -2,49 +2,6 @@ if ("undefined" == typeof(vwofPlayer)) {
     var vwofPlayer = {};
 };
 
-/**
-   The player is a direct link to a detected video source
-   It is composed of a thumbnail if the video_info provide one
-   and in case of several video type / format a combobox
-
-   == video_player variable ==
-
-   video player is an array of an hash
-
-   each video is an entry in the array and the hash contains video information
-   
-   video_info
-   [
-   {
-   'player':,              DOM where the video player will be embed, replacing all child nodes
-   if undefined, the video open in a new tab
-   
-   'video_img':,           string link to the picture displayed as a preview
-   if undefined the background is black
-   
-   'videos': []            array of video informations, see below
-   }
-   ]
-
-
-   If the videos array contains more than one element a combo box (select tag)
-   will be added in the player displaying the format and quality
-
-
-
-   videos
-   [
-   {
-   'quality':,              quality of the video (low, medium, hd720, hd1080)
-   
-   'format':,               format of the video (webm, mp4, flv, ...)
-   
-   'url':                   direct link to the video
-   this is the only mandatory variable
-   }
-   ]
-
-*/
 vwofPlayer = {
     /**
        add the player stylecheet link to the head of the document

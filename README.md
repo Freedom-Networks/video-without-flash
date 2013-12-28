@@ -64,6 +64,7 @@ For licensing reasons firefox do not support at the moment the H264 codec, altho
 
 The parser must respect the following API  : 
 
+```javascript
 var parser = {
     BASE_URI: '',
     parse_embed: function(cw) {
@@ -79,7 +80,7 @@ var parser = {
 	return video_info;
     }
 };
-
+```
 
 === video_info variable ===
 
@@ -87,29 +88,28 @@ video player is an array of an hash
 
 each video is an entry in the array and the hash contains video information
 
-video_info
-[
-{
-'player':,              DOM where the video player will be embed, replacing all child nodes, if undefined, the video open in a new tab
-
-'video_img':,           string link to the picture displayed as a preview, if undefined the background is black
-
-'videos': []            array of video informations, see below
-}
-]
-
-
 If the videos array contains more than one element a combo box (select tag)
 will be added in the player displaying the format and quality
 
-
-videos
+```javascript
+video_info = 
 [
 {
-'quality':,              quality of the video (low, medium, hd720, hd1080)
+'player':,              //DOM where the video player will be embed, replacing all child nodes, if undefined, the video open in a new tab
 
-'format':,               format of the video (webm, mp4, flv, ...)
+'video_img':,           //string link to the picture displayed as a preview, if undefined the background is black
 
-'url':                   direct link to the video, this is the only mandatory variable
+'videos': []            //array of video informations, see below
 }
-]
+];
+
+videos = 
+[
+{
+'quality':,              //quality of the video (low, medium, hd720, hd1080)
+
+'format':,               //format of the video (webm, mp4, flv, ...)
+
+'url':                   //direct link to the video, this is the only mandatory variable
+}
+];

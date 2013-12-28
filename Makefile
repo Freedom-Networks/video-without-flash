@@ -4,13 +4,10 @@ extension_name := vwof
 # The UUID of the extension.
 extension_uuid := vwof@drev.com
 
-#brand = abrowser
 brand = firefox
 
 # The name of the profile dir where the extension can be installed.
-#profile_dir := tmly9v55.default
-#profile_dir := 6zmefmpw.default
-profile_dir := 44rjgep5.default
+profile_dir := devel
 
 # The zip application to be used.
 ZIP := zip
@@ -108,13 +105,16 @@ $(xpi_file): $(build_dir) $(xpi_built)
 	@echo "Creating XPI file. Done!"
 
 $(build_dir)/$(modules_dir)/%: $(modules_dir)/% $(build_dir)/$(modules_dir)
+	@echo Copy
 	@cp -f $< $@
 
 $(build_dir)/$(preferences_dir)/%: \
   $(preferences_dir)/% $(build_dir)/$(preferences_dir)
+	@echo Copy
 	@cp -f $< $@
 
 $(build_dir)/$(defaults_dir)/%: $(defaults_dir)/% $(build_dir)/$(defaults_dir)
+	@echo Copy
 	@cp -f $< $@
 
 $(build_dir)/$(preferences_dir): $(build_dir)/$(defaults_dir)
@@ -129,8 +129,10 @@ $(build_dir)/$(defaults_dir):
     mkdir $(build_dir)/$(defaults_dir); \
   fi
 
+#This is the default target
 $(build_dir)/%: %
-	@cp -f $< $@
+	@echo build dir target $< to $@
+	@cp -f  $< $@
 
 $(build_dir):
 	@if [ ! -x $(build_dir) ]; \
@@ -149,4 +151,8 @@ $(build_dir)/$(source_root)/$(content_dir):
   then \
     mkdir $(build_dir)/$(content_dir); \
   fi
+
+run:
+	$(brand) -purgecaches -P $(profile_dir)
+
 

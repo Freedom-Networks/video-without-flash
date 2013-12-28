@@ -7,7 +7,7 @@ extension_uuid := vwof@drev.com
 brand = firefox
 
 # The name of the profile dir where the extension can be installed.
-profile_dir := default
+profile_dir := "devel"
 
 # The zip application to be used.
 ZIP := zip
@@ -94,7 +94,7 @@ install: $(build_dir) $(xpi_built)
 	@if [ ! -x $(profile_location) ]; \
   then \
     echo "Creating profile $(profile_location)"; \
-    mkdir --parents $(profile_location); \
+    mkdir  $(profile_location); \
   fi
 	@cp -Rf  $(build_dir)/* $(profile_location)
 
@@ -130,13 +130,8 @@ $(build_dir)/$(defaults_dir):
 
 #This is the default target
 $(build_dir)/%: %
-	@echo build dir target $< to $@
-	@if [ ! -x $@ ]; \
-  then \
-    mkdir --parents $@; \
-  fi
-
-	@cp -f  $< $@
+	@echo copying $< to $(build_dir)
+	@cp --parents  $< $(build_dir)
 
 $(build_dir):
 	@if [ ! -x $(build_dir) ]; \
@@ -157,5 +152,8 @@ $(build_dir)/$(source_root)/$(content_dir):
   fi
 
 run:
-	$(brand) -purgecaches -P $(profile_dir) & 
+	$(brand) -purgecaches -P & 
+
+rerun:
+	killall $(brand) ; $(brand) -purgecaches & 
 

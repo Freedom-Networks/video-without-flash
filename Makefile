@@ -9,8 +9,8 @@ brand = firefox
 
 # The name of the profile dir where the extension can be installed.
 #profile_dir := tmly9v55.default
-profile_dir := 6zmefmpw.default
-#profile_dir := 44rjgep5.default
+#profile_dir := 6zmefmpw.default
+profile_dir := 44rjgep5.default
 
 # The zip application to be used.
 ZIP := zip
@@ -98,7 +98,7 @@ install: $(build_dir) $(xpi_built)
   then \
     mkdir $(profile_location); \
   fi
-	@cp -Rf $(build_dir)/* $(profile_location)
+	@cp -Rf --parents $(build_dir)/* $(profile_location)
 	@echo "Installing in profile folder. Done!"
 	@echo
 

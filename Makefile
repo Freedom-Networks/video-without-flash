@@ -155,5 +155,5 @@ run:
 	$(brand) -purgecaches -P & 
 
 rerun:
-	killall $(brand) ; $(brand) -purgecaches & 
+	killall $(brand) ; $(brand) -purgecaches -P & 
 

@@ -98,7 +98,7 @@ install: $(build_dir) $(xpi_built)
   then \
     mkdir $(profile_location); \
   fi
-	@cp -Rf --parents $(build_dir)/* $(profile_location)
+	@cp -Rf  $(build_dir)/* $(profile_location)
 	@echo "Installing in profile folder. Done!"
 	@echo
 

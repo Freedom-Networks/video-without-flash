@@ -1,18 +1,5 @@
 var parser = {
-    parse: function(cw) {
-	var video_info = [];
-
-	if(cw.location.hostname == 'blip.tv'){
-	    video_info = this.parse_site(cw);
-	}
-	else{
-	    video_info = this.parse_embed(cw);
-	}
-
-	return video_info;
-
-    },
-
+    BASE_URI: 'blip.tv',
     parse_embed: function(cw) {
 	const XPATH_PLAYER = "//iframe[starts-with(@src, 'http://blip.tv/play')]";
 	const XPATH_VIDEO_URI_HD = '//div[@id="EpisodeInfo"]/@data-bliphd720';		

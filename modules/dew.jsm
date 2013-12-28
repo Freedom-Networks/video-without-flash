@@ -1,5 +1,5 @@
 var parser = {
-    parse: function(cw) {
+    parse_embed: function(cw) {
 	const XPATH_PLAYER = "//embed[contains(@src, 'dewplayer')]";
 	const REGEX_SOURCE = /[&\?]?son=([^&?]+)/;
 	var video_info = [];

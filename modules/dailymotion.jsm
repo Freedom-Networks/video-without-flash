@@ -1,19 +1,5 @@
 var parser = {
-    BASE_URI        : 'dailymotion.com',
-    
-    parse: function(cw) {
-	var video_info = [];
-	if(cw.location.hostname == 'www.'+this.BASE_URI){
-	    video_info = this.parse_site(cw);
-	}
-	else{
-	    video_info = this.parse_embed(cw);
-	}
-
-	return video_info;
-
-    },
-    
+    BASE_URI        : 'www.dailymotion.com',
     parse_site:function(cw) {
 	var video_info = [];
 
@@ -30,7 +16,7 @@ var parser = {
     },
 
     parse_embed: function(cw) {
-	const XPATH_PLAYER = "//iframe[contains(@src, 'http://www."+ this.BASE_URI +"/embed')]";
+	const XPATH_PLAYER = "//iframe[contains(@src, 'http://"+ this.BASE_URI +"/embed')]";
 
 	var video_info = [];
 	var xp_res_player = cw.document.evaluate(XPATH_PLAYER, cw.document, null, cw.XPathResult.UNORDERED_NODE_ITERATOR_TYPE, null );

@@ -1,5 +1,5 @@
 var parser = {
-    parse: function(cw) {
+    parse_embed: function(cw) {
 	const XPATH_PLAYER = "//iframe[starts-with(@src, 'http://cms.springboardplatform.com/embed_iframe')]";
 	const XPATH_VIDEO_URI = '/html/head/meta[@property="og:video"]/@content';
 	const XPATH_VIDEO_IMG = '/html/head/meta[@property="og:image"]/@content';

@@ -4,23 +4,8 @@
 */
 
 var parser = {
-    BASE_URI:'ustream.tv',
+    BASE_URI:'www.ustream.tv',
     
-    parse: function(cw) {
-
-	var video_info = [];
-	//only works on www.ustream.tv
-	if(cw.location.hostname == 'www.'+this.BASE_URI){
-	    video_info = this.parse_site(cw);
-	}
-	else{
-	    //todo parse embed
-	    return;
-	}
-	
-	return video_info;
-    },
-
     parse_site : function(cw){
 	const XPATH_CHANNEL_ID = '/html/head/meta[@name="ustream:channel_id"]/@content';
 	const XPATH_VIDEO_IMG = '/html/head/meta[@property="og:image"]/@content';

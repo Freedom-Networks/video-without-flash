@@ -4,7 +4,7 @@
    but can be readed with the help of a media plugin like vlc-web-plugin
 */
 var parser = {
-    parse: function(cw) {
+    parse_embed: function(cw) {
 	const XPATH_PLAYER = "//video";
 	const XPATH_VIDEO_URI = '//video/source';
 	var video_info = [];

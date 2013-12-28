@@ -1,21 +1,7 @@
 var parser = {
-    BASE_URI : 'youtube.com',
+    BASE_URI : 'www.youtube.com',
     API_GET_VIDEO:'http://youtube.com/get_video_info?video_id=VIDEO_ID',
-    //cw:undefined,
-    parse: function(cw) {
-
-	var video_info = [];
-	if(cw.location.hostname == 'www.'+this.BASE_URI){
-	    video_info = this.parse_site(cw);
-	}
-	else{
-	    video_info = this.parse_embed(cw);
-	}
-
-	return video_info;
-
-    },
-
+    
     /**
        parse a video on the web site
     */
@@ -24,7 +10,7 @@ var parser = {
 	var doc = cw.document;	
 	var video_info = [];
 	var id;
-	
+
 	//get the video id from the current url
 	if(url_match = doc.URL.match(REGEX_VIDEO_ID_SITE)){
 	    id = url_match[1];
@@ -39,13 +25,9 @@ var parser = {
 	    if(vwofChrome.youtubeUtils.yt_is_wide()){
 	      player_api.setAttribute("style", "margin:auto;");  //center the player
 	    }
-	    //this.cw = cw;
 	}
 	else {
-	    //cw = this.cw;
 	    player_api = doc.getElementById('vwof_player-api');  //the page has previously been proceeded
-
-	    //alert(doc.URL + "\n" + doc.documentElement.textContent);
 	}
 
 	//remove all child from the player api, in case we need to load a new video
@@ -77,7 +59,7 @@ var parser = {
 	var video_info = [];
 	var player;
 	const REGEX_VIDEO_ID_IFRAME = /embed\/([\w\-]{11})/;
-	const XPATH_PLAYER_IFRAME = "//iframe[contains(@src, 'www."+this.BASE_URI+"/embed')]";
+	const XPATH_PLAYER_IFRAME = "//iframe[contains(@src, '"+this.BASE_URI+"/embed')]";
 	
 	var xp_res_player = cw.document.evaluate(XPATH_PLAYER_IFRAME, cw.document, null, cw.XPathResult.UNORDERED_NODE_ITERATOR_TYPE, null );
 

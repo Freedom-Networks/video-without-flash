@@ -38,7 +38,7 @@ and the "new" layout since september 2013 (http://cinemassacre.com/2013/09/06/av
 For both layout, the video data are in the same format, only the way to get the script content differ
 */
 var parser = {
-    parse: function(cw) {
+    parse_embed: function(cw) {
 	const REGEX_IMG = /'image': '(.*\.jpg)'/;
 	var video_info = [];   //player DOM element, preview image and array of videos
 	

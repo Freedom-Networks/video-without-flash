@@ -72,7 +72,7 @@ vwofChrome.BrowserOverlay = {
 		    video_data = parser.parse_site(cw);
 		    has_parsed_site = true;
 		}
-		else{
+		else if(parser.parse_embed){
 		    video_data = parser.parse_embed(cw);
 		}
 

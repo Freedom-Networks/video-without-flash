@@ -5,13 +5,13 @@
   
     <preferences>
       <preference id="extensions.vwof.activate_onload" name="extensions.vwof.activate_onload" type="bool"/>
-      <preference id="plugins.hide_infobar_for_missing_plugin" name="plugins.hide_infobar_for_missing_plugin" type="bool"/>
+      <preference id="plugins.notifyMissingFlash" name="plugins.notifyMissingFlash" type="bool"/>      
       <preference id="full-screen-api.approval-required" name="full-screen-api.approval-required" type="bool"/>
     </preferences>
 
     <checkbox label="Activate on page load" preference="extensions.vwof.activate_onload"/>
-    <checkbox label="Disable missing plugin warnings" preference="plugins.hide_infobar_for_missing_plugin"/>
-    <checkbox label="Display approval message when fullscreen" preference="full-screen-api.approval-required"/>
+    <checkbox label="Enable missing flash plugin warnings" preference="plugins.notifyMissingFlash"/>
+    <checkbox label="Enable approval message when fullscreen" preference="full-screen-api.approval-required"/>
     
   </prefpane>
 
@@ -51,7 +51,8 @@
       <preference id="extensions.vwof.modules" name="extensions.vwof.modules" type="string"/>
     </preferences>
  
-    <checkbox id="vwof_yt_wide" label="Use YouTube wide view" oncommand="vwofChrome.youtubeUtils.toggle_yt_wide(event)"/>
+    <checkbox id="vwof_yt_wide" label="YouTube large player" oncommand="vwofChrome.youtubeUtils.toggle_yt_wide(event)"/>
+    <!--button label="Reload modules" oncommand="vwofChrome.BrowserOverlay.reload_modules()"/-->     
   </prefpane>
   
   <script src="youtube_utils.js"/> 

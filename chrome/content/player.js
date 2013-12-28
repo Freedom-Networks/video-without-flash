@@ -78,12 +78,10 @@ vwofPlayer = {
 	}
 	
 	//Create the 'player' (div that call the frame with the video as src when clicked)
-	var player_onclick = "e=document.getElementById('vwof_select_video_"+player_id+"');var i = document.createElement('iframe');i.setAttribute('class', 'vwof_frame');i.setAttribute('src', e.options[e.selectedIndex].value);i.setAttribute('style', '"+player_style+"');var p = this.parentNode;p.replaceChild(i, this);";
 	var player = doc.createElement('div');
 	player.setAttribute('class', 'vwof_player');
-	if(!player.id)player.setAttribute('id', player_id);  //indentify the div player if the original tag did not have one 
-	player.setAttribute('onclick', player_onclick);
-
+	if(!player.id)player.setAttribute('id', player_id);  //indentify the div player if the original tag did not have one
+	var player_onclick = "var i = document.createElement('iframe');i.setAttribute('class', 'vwof_frame');";
 	//thumbnail
 	if(img = video_info['video_img']){
 	    player_style += 'background-image:url('+img+');';
@@ -95,34 +93,12 @@ vwofPlayer = {
 	player.appendChild(node_image);
 
 	//select video format and quality
-	var prefered_index = this.find_prefered_video(video_info.videos);
+	var prefered_index = 0;
+
 	
-	var node_select = doc.createElement('select');
-	node_select.setAttribute('id', 'vwof_select_video_'+ player_id);
-	node_select.setAttribute('class', 'vwof_video_info');
-	node_select.setAttribute('onclick', "event.stopPropagation();");
-	node_select.setAttribute('onchange', 'document.getElementById(\'vwof_link_new_tab_'+player_id+'\').href=this.options[this.selectedIndex].value');
-	var i;
-	for(i=0;i<video_info.videos.length;i++){
-	    var node_option = doc.createElement('option');
-	    node_option.setAttribute('value', video_info.videos[i].url);
-	    
-	    var format = video_info.videos[i].format ? video_info.videos[i].format : '';
-	    var quality = video_info.videos[i].quality ? video_info.videos[i].quality : '';
-	    var node_option_content = doc.createTextNode(format + ' ' + quality);
-
-	    if(i == prefered_index){
-		node_option.setAttribute('selected', 'true');
-	    }
-	    
-	    node_option.appendChild(node_option_content);
-	    node_select.appendChild(node_option);
-	}
-
-	//if the number of video found for this player is only one, no not display the select and append a simple text
+	//if the number of video found for this player is only one, do not display the select and append a simple text
 	if(video_info.videos.length == 1){
-	    node_select.setAttribute('style', 'display:none;');
-	    
+	    player_onclick += "i.setAttribute('src', '"+video_info.videos[prefered_index].url+"');";
 	    var node_span = doc.createElement('span');
 	    node_span.setAttribute('class', 'vwof_video_info');
 	    var format = video_info.videos[0].format ? video_info.videos[0].format : '';
@@ -132,13 +108,44 @@ vwofPlayer = {
 	    node_span.appendChild(node_info);
 	    player.appendChild(node_span);
 	}
-	player.appendChild(node_select);
+	else{
+	    prefered_index = this.find_prefered_video(video_info.videos);
+
+	    player_onclick += "e=document.getElementById('vwof_select_video_"+player_id+"');i.setAttribute('src', e.options[e.selectedIndex].value);";
+	    
+	    var node_select = doc.createElement('select');
+	    node_select.setAttribute('id', 'vwof_select_video_'+ player_id);
+	    node_select.setAttribute('class', 'vwof_video_info');
+	    node_select.setAttribute('onclick', "event.stopPropagation();");
+	    node_select.setAttribute('onchange', 'document.getElementById(\'vwof_link_new_tab_'+player_id+'\').href=this.options[this.selectedIndex].value');
+
+	    for(var i=0;i<video_info.videos.length;i++){
+		var node_option = doc.createElement('option');
+		node_option.setAttribute('value', video_info.videos[i].url);
+		
+		var format = video_info.videos[i].format ? video_info.videos[i].format : '';
+		var quality = video_info.videos[i].quality ? video_info.videos[i].quality : '';
+		var node_option_content = doc.createTextNode(format + ' ' + quality);
+
+		if(i == prefered_index){
+		    node_option.setAttribute('selected', 'true');
+		}
+		
+		node_option.appendChild(node_option_content);
+		node_select.appendChild(node_option);
+		player.appendChild(node_select);
+		
+	    }
+	}
+
+	player_onclick += 'var p = this.parentNode;p.replaceChild(i, this);';
+	player.setAttribute('onclick', player_onclick);
 	
 	//open in a new tab link
 	var node_link_new_tab = doc.createElement('a');
 	node_link_new_tab.setAttribute('id', 'vwof_link_new_tab_'+player_id);
 	node_link_new_tab.setAttribute('onclick', 'event.stopPropagation();');
-	node_link_new_tab.setAttribute('href', video_info.videos[0].url);
+	node_link_new_tab.setAttribute('href', video_info.videos[prefered_index].url);
 	node_link_new_tab.setAttribute('target', '_blank');
 	var a_content_new_tab = doc.createTextNode('Open in a new tab');
 	node_link_new_tab.appendChild(a_content_new_tab);

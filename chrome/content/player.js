@@ -25,7 +25,8 @@ vwofPlayer = {
 	var doc = cw.document;
 	var h = cstyle.getPropertyValue("height");
 	var w = cstyle.getPropertyValue("width");
-        var player_style = 'min-width:'+w+';min-height:'+h+';';
+        var player_style_size = 'min-width:'+w+';min-height:'+h+';';
+	var player_style_image = '';
 	var player_id = 'vwof_' + Math.floor((Math.random() * 99));
 
 	//add the player css if necessary
@@ -37,11 +38,12 @@ vwofPlayer = {
 	//Create the 'player' (div that call the frame with the video as src when clicked)
 	var player = doc.createElement('div');
 	player.setAttribute('class', 'vwof_player');
-	if(!player.id)player.setAttribute('id', player_id);  //indentify the div player if the original tag did not have one
-	var player_onclick = "var i = document.createElement('iframe');i.setAttribute('class', 'vwof_frame');";
+	if(!player.id)player.setAttribute('id', player_id);  //identify the div player if the original element did not have an id
+	var player_onclick = "var i = document.createElement('iframe');i.setAttribute('class', 'vwof_frame');i.setAttribute('style', '"+player_style_size+"');";
+	
 	//thumbnail
 	if(img = video_info['video_img']){
-	    player_style += 'background-image:url('+img+');';
+	    player_style_image = 'background-image:url('+img+');';
 	}
 
 	//vwof icon
@@ -51,7 +53,6 @@ vwofPlayer = {
 
 	//select video format and quality
 	var prefered_index = 0;
-
 	
 	//if the number of video found for this player is only one, do not display the select and append a simple text
 	if(video_info.videos.length == 1){
@@ -118,7 +119,7 @@ vwofPlayer = {
 	}
 
 	//apply style to the player
-	player.setAttribute('style', player_style);
+	player.setAttribute('style', player_style_image + player_style_size);
 	
 	return player;
     },

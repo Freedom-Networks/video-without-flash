@@ -3,7 +3,6 @@ var parser = {
     parse_embed: function(cw) {
 	const XPATH_PLAYER = "//iframe[starts-with(@src, 'http://blip.tv/play')]";
 	var video_info = [];
-	var videos = [];
 	var player;
 	var video_img;
 
@@ -15,6 +14,7 @@ var parser = {
 	
 	var xp_res_player = cw.document.evaluate(XPATH_PLAYER, cw.document, null, cw.XPathResult.UNORDERED_NODE_ITERATOR_TYPE, null );
 	while (player = xp_res_player.iterateNext()) {
+    	    var videos = [];
 	    var player_doc = player.contentDocument;
 
 	    if(player_doc.getElementById('EpisodeInfo')){

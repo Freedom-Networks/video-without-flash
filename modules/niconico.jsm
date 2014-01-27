@@ -3,7 +3,7 @@ var parser = {
 
     parse_site: function(cw) {
 	var video_info = [];
-	var player = cw.document.getElementById('nicoplayerContainer');
+	var player = cw.document.getElementById('nicoplayerContainer');	
 	if(!player)return;
 
 	////get some video information  (thumbnail, video id, etc)
@@ -24,7 +24,6 @@ var parser = {
 	
 	var videos = [ {
 	            'quality':'medium',
-		    'format':'mp4',
 		    'url': url
 		   } ];
 	
@@ -33,7 +32,7 @@ var parser = {
 	    'video_img': json_data.videoDetail.thumbnail,
 	    'videos': videos
 	});
-
+	
 	return video_info;
     }
 };

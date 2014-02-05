@@ -4,12 +4,26 @@ var parser = {
     parse_site: function(cw) {
 	var video_info = [];
 	var player = cw.document.getElementById('nicoplayerContainer');	
-	if(!player)return;
 
+	//remove the 'limited functionality' alert warning
+	const XPATH_CHECK_FLASH = '/html/body/script[67]';
+	var node_script_check_flash = cw.document.evaluate(XPATH_CHECK_FLASH,
+							   cw.document, null,
+							   cw.XPathResult.FIRST_ORDERED_NODE_TYPE,
+							   null).singleNodeValue;
+	if(node_script_check_flash)node_script_check_flash.textContent = '';
+
+	//auto redirect to the 'skip flash install' page
+	if(new RegExp(/\/watch\/sm\d+$/).test(cw.location.href)){
+	    cw.location.assign(cw.location.href+'?ver=q9');
+	}
+	
 	////get some video information  (thumbnail, video id, etc)
 	//the script content contains a json string with informations
 	const XPATH_SCRIPT = '/html/body/script';
-	var script_content = cw.document.evaluate(XPATH_SCRIPT, cw.document, null, cw.XPathResult.STRING_TYPE, null).stringValue;
+	var script_content = cw.document.evaluate(XPATH_SCRIPT, cw.document,
+						  null, cw.XPathResult.STRING_TYPE,
+						  null).stringValue;
 
 	//extract the json formated part of the script content
 	var string_data = script_content.match(/window.watchAPIData = (.*);/)[1];    

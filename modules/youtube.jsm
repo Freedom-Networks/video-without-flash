@@ -98,7 +98,15 @@ var parser = {
 	    decoded_uri += '&signature='+assoc_url_decoded_fmt_stream['sig'];    //add the signature to the decoded url
 	    var type = decodeURIComponent(assoc_url_decoded_fmt_stream['type']);
 	    var quality = decodeURIComponent(assoc_url_decoded_fmt_stream['quality']);
-	    if(quality == 'small')quality = 'low'; 
+
+	    //small is replaced by low so the prefered format can detect the quality
+	    if(quality == 'small')quality = 'low';
+	    //remove some part of the mime type (we know it's a video)
+	    //we want to display only the type and codecs
+	    if(type){
+		type=type.replace('video/', '');
+		type=type.replace(/;\+codecs="(.+)"/, '($1)');
+	    }
 	    
 	    videos.push( {'quality': quality, 'format':type, 'url':decoded_uri} );
 	}

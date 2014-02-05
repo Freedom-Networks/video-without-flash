@@ -53,11 +53,14 @@ Each media provider is handled by a "parser". Javascript modules (.jsm) that are
 For licensing reasons firefox do not support at the moment the H264 codec, although  it may change in the future. If a site uses HTML5 to display a video, but the video itself is encoded with H264 or a variant you normally wont be able to play it. By using the HTML5 parser, you can read the video if a media player plugin is installed as stated previously.
 
 
-= Technical documentation =
+= Technical documentation for developers =
 
 == How to write a new parser == 
 
+<i>Do not esitate to fork and add your own parser</i>
+
 * Step 1 : Add the name of your parser without the .jsm extension in the browser variable "extensions.vwof.modules" you can do it with about:config for test purposes or do it permanently in src/defaults/preferenes/vwof.js
+The boolean value (parsername:1) is eather if your parser is activated or not. 
 
 
 * Step 2 : Create a jsm file in the modules directory
@@ -113,3 +116,24 @@ videos =
 'url':                   //direct link to the video, this is the only mandatory variable
 }
 ];
+
+
+== How to build ==
+
+This plugin comes with a home made makefile based on mozilla school xul example.
+
+Targets are : 
+
+* make
+  Create an .xpi in the ../bin directory (manually create ../bin if necessary)
+
+* make install
+  install the plugin in the profil directory. By default the profil name is "devel"
+  you can change this behaviour by passing the profile_dir variable (example : make install profile_dir default)
+
+* you need to restart firefox to apply the changes, it can be done with the make target
+  make rerun
+
+  which will run the following command : killall firefox ; firefox -purgecaches -P &
+
+

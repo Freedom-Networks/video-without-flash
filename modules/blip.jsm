@@ -85,6 +85,9 @@ var parser = {
 	    var format = post.additionalMedia[i].primary_mime_type;
 	    if(format == 'text/plain')continue;
 	    
+	    //remove some part of the mime type (we know it's a video)
+	    format=format.replace('video/', '');
+
 	    videos.push({'format': format,
 			 'quality': post.additionalMedia[i].media_width + '/' + post.additionalMedia[i].media_height,
 			 'url':post.additionalMedia[i].url}

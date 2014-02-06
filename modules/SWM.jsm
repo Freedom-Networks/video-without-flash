@@ -83,7 +83,6 @@ var parser = {
 	    });
 	}
 
-	
 	return video_info;
     },
 

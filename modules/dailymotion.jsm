@@ -3,7 +3,11 @@ var parser = {
     parse_site:function(cw) {
 	var video_info = [];
 
-	var player = cw.document.getElementById('container_player_main');	
+	var player = cw.document.getElementById('container_player_main');
+	if(!player){
+	    return;
+	}
+	
 	var video_data = this.get_video_data(player.contentDocument);
 	video_data['player'] = player;
 

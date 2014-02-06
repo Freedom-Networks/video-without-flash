@@ -100,7 +100,7 @@ vwofChrome.BrowserOverlay = {
     /**
        get the video source and add a link in the document 
     */
-    openVideo:function(cw) {
+    detectVideo:function(cw) {
 
 	//check if the content window is defined
 	if (!cw

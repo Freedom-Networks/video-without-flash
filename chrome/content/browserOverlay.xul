@@ -8,9 +8,9 @@
   <script type="application/x-javascript" src="chrome://vwof/content/onload.js" />
 
   <script type="application/x-javascript">
-    function oncommand_openvideo(){
+    function oncommand_detectvideo(){
       var cw = getBrowser().contentWindow;
-      vwofChrome.BrowserOverlay.openVideo(cw);
+      vwofChrome.BrowserOverlay.detectVideo(cw);
     }
 
     function vwof_toggle(event){
@@ -22,11 +22,11 @@
   </script>
   
   <keyset>
-    <key id="vwof-key-open-video" modifiers="alt" key="w" oncommand="oncommand_openvideo();"/>
+    <key id="vwof-key-detect-video" modifiers="alt" key="w" oncommand="oncommand_detectvideo();"/>
   </keyset>
 
   <popup id="contentAreaContextMenu">
-    <menuitem id="vwof-open-video" key="vwof-key-open-video" label="Watch video without flash" oncommand="oncommand_openvideo();"/>
+    <menuitem id="vwof-detect-video" key="vwof-key-detect-video" label="Watch video without flash" oncommand="oncommand_detectvideo();"/>
   </popup>
 
   <toolbarpalette id="BrowserToolbarPalette">

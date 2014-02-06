@@ -6,7 +6,7 @@ function pageLoad(event) {
 	&& event.originalTarget instanceof HTMLDocument
        ){
 	var cw = event.originalTarget.defaultView;
-	vwofChrome.BrowserOverlay.openVideo(cw);
+	vwofChrome.BrowserOverlay.detectVideo(cw);
     }
 }
 

@@ -21,7 +21,6 @@ var parser = {
 	var videos = this.parse_data(data);
 	
 	var player = cw.document.getElementsByClassName("player")[0];
-	if(!player)return;
 
 	video_info.push({
 	    'player':player,

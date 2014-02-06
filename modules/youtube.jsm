@@ -39,7 +39,7 @@ var parser = {
 	player_api.appendChild(player);
 	
 	var api_video_uri = this.API_GET_VIDEO.replace('VIDEO_ID', id);
-	var data = vwofChrome.utils.get(api_video_uri);
+	var data = vwofChrome.BrowserOverlay.get(api_video_uri);
 	var video_data = this.parse_data(data);
 	video_data['player'] = player;
 	
@@ -67,7 +67,7 @@ var parser = {
 
 	    var id = player.src.match(REGEX_VIDEO_ID_IFRAME)[1];
 	    var api_video_uri = this.API_GET_VIDEO.replace('VIDEO_ID', id);
-	    var data = vwofChrome.utils.get(api_video_uri);
+	    var data = vwofChrome.BrowserOverlay.get(api_video_uri);
 
 	    var parsed_array = this.parse_data(data);
 	    parsed_array['player'] = player;
@@ -84,7 +84,7 @@ var parser = {
     */
     parse_data: function(data){
 	var videos = [];
-	var assoc_data = vwofChrome.utils.url_vars_to_array(data);
+	var assoc_data = vwofChrome.BrowserOverlay.url_vars_to_array(data);
 
 	var url_encoded_fmt_stream_map = assoc_data['url_encoded_fmt_stream_map'];
 	var url_decoded_fmt_stream_map = decodeURIComponent(url_encoded_fmt_stream_map);
@@ -92,7 +92,7 @@ var parser = {
 	var i;
 	
 	for(i=0;i<arr_url_decoded_fmt_stream_map.length;i++){
-	    var assoc_url_decoded_fmt_stream = vwofChrome.utils.url_vars_to_array(arr_url_decoded_fmt_stream_map[i]);
+	    var assoc_url_decoded_fmt_stream = vwofChrome.BrowserOverlay.url_vars_to_array(arr_url_decoded_fmt_stream_map[i]);
 	    var encoded_uri = assoc_url_decoded_fmt_stream['url'];
 	    var decoded_uri = decodeURIComponent(encoded_uri);
 	    decoded_uri += '&signature='+assoc_url_decoded_fmt_stream['sig'];    //add the signature to the decoded url

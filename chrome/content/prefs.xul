@@ -44,7 +44,6 @@
   
   <prefpane id="vwof_pref_modules" label="modules">
     <script type="application/x-javascript" src="chrome://vwof/content/browserOverlay.js" />
-    <script type="application/x-javascript" src="chrome://vwof/content/utils.js" />  
     <script type="application/x-javascript" src="chrome://vwof/content/youtube_utils.js" />
 
     <preferences>
@@ -52,6 +51,7 @@
     </preferences>
  
     <checkbox id="vwof_yt_wide" label="YouTube large player" oncommand="vwofChrome.youtubeUtils.toggle_yt_wide(event)"/>
+    <!--button label="Reload modules" oncommand="vwofChrome.BrowserOverlay.reload_modules()"/-->     
   </prefpane>
   
   <script src="youtube_utils.js"/> 

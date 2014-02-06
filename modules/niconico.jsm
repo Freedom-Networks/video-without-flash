@@ -32,8 +32,8 @@ var parser = {
 	////get the video link from the flapi
 	var video_id = json_data.flashvars.videoId;
 	var flapi_url = 'http://flapi.nicovideo.jp/api/getflv?v='+video_id;
-	var data = vwofChrome.utils.get(flapi_url);
-	var assoc_data = vwofChrome.utils.url_vars_to_array(data);
+	var data = vwofChrome.BrowserOverlay.get(flapi_url);
+	var assoc_data = vwofChrome.BrowserOverlay.url_vars_to_array(data);
 	var url = decodeURIComponent(assoc_data['url']);
 	
 	var videos = [ {

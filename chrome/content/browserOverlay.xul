@@ -3,10 +3,9 @@
 
 <overlay id="vwof-browser-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script type="application/x-javascript" src="chrome://vwof/content/browserOverlay.js" />
-  <script type="application/x-javascript" src="chrome://vwof/content/utils.js" />  
   <script type="application/x-javascript" src="chrome://vwof/content/youtube_utils.js" />
   <script type="application/x-javascript" src="chrome://vwof/content/player.js" />
-  <script type="application/x-javascript" src="chrome://vwof/content/listener.js" />
+  <script type="application/x-javascript" src="chrome://vwof/content/onload.js" />
 
   <script type="application/x-javascript">
     function oncommand_detectvideo(){
@@ -31,10 +30,6 @@
   </popup>
 
   <toolbarpalette id="BrowserToolbarPalette">
-    <toolbarbutton id="vwof-button" class="vwof-button" tooltiptext="Video WithOut Flash" oncommand="vwof_toggle(event);" type="menu-button">
-      <menupopup id="vwof-button-menupopup">
-	<!-- video direct links are programmatically added here-->
-      </menupopup>
-    </toolbarbutton>
+    <toolbarbutton id="vwof-button" class="vwof-button" tooltiptext="Video WithOut Flash" oncommand="vwof_toggle(event);" type="checkbox"></toolbarbutton>
   </toolbarpalette>
 </overlay>

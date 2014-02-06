@@ -58,14 +58,14 @@ vwofChrome.BrowserOverlay = {
        call every parse function from loaded parsers
     */
     getVideoInfo:function (cw) {
-	var video_info = [];	// array of video_data
-	var has_parsed_site = false;
+	var video_info = [];	      // array of video_data
+	var has_parsed_site = false;  //break the video detection when true
 	
 	for(var key_parser in this.parsers){
 	    
   	    try{
 		var parser = this.parsers[key_parser].parser;
-		var video_data = [];  //array of video links with quality
+		var video_data = [];  //array of video links with format, quality, preview image
 
 		//if the parser has a URI and it's the current location
 		if(parser.BASE_URI && cw.location.hostname == parser.BASE_URI){
@@ -82,8 +82,9 @@ vwofChrome.BrowserOverlay = {
 		    for(var i=0;i < video_data.length;i++){
 			video_data[i]['source'] = key_parser;
 		    }
-		    
-		    video_info = video_info.concat(video_data);    //concat the chunks of video(s) from this parser
+
+		    //concat the chunks of video(s) from this parser
+		    video_info = video_info.concat(video_data);
 		}
 	    }
 	    catch(err){
@@ -98,6 +99,25 @@ vwofChrome.BrowserOverlay = {
     },
 
     /**
+       Add a video link to the toolbar menu item
+    */
+    addLinkToButton:function(label, link){
+	var popup = document.getElementById("vwof-button-menupopup"); 
+	const XUL_NS = "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul";
+	var item = document.createElementNS(XUL_NS, "menuitem"); // create a new XUL menuitem
+	item.setAttribute("label", label);
+	item.setAttribute("onclick", "window.open('"+link+"', 'NewDocument')");
+	popup.appendChild(item);
+    },
+
+    clearButton:function(){
+	var popup = document.getElementById("vwof-button-menupopup");
+	while (popup.firstChild) {
+	    popup.removeChild(popup.firstChild);
+	}
+    },
+    
+    /**
        get the video source and add a link in the document 
     */
     detectVideo:function(cw) {
@@ -110,88 +130,27 @@ vwofChrome.BrowserOverlay = {
 	    return;
 	}
 
+	//fetch video links from the current contentWindow
 	var video_info = this.getVideoInfo(cw);
-	var doc = cw.document;
 
+	this.clearButton();  //clear all the video links in the toolbar button
+	    
 	for (var i = 0; i < video_info.length; i++) {
+	    //replace the dom node where the video is played by the vwof player
 	    if(video_info[i]['player']){
     		var replace_location = video_info[i]['player'];
 		var player = vwofPlayer.create_player(video_info[i], cw);
 		var replace_parent = replace_location.parentNode;
 		replace_parent.replaceChild(player, replace_location);
 	    }
-	    else{
-		var j = vwofPlayer.find_prefered_video(video_info[i].videos);
-		gBrowser.selectedTab = gBrowser.addTab(video_info[i].videos[j].url);
+
+	    //add the video link to the menuitem button
+    	    for(var j=0;j<video_info[i].videos.length;j++){
+		var label = video_info[i].videos[j].format + ' ' + video_info[i].videos[j].quality;
+		var link = video_info[i].videos[j].url;
+	        this.addLinkToButton(label, link);
 	    }
 	}
-    },
-
-    /**
-       utility function needed by some parser to get the video source
-    */
-    get:function(uri){
-	const XMLHttpRequest = Components.Constructor("@mozilla.org/xmlextras/xmlhttprequest;1",
-						      "nsIXMLHttpRequest",
-						      "open");
-	
-	let xmlhttp = XMLHttpRequest("GET", uri, false);
-	xmlhttp.send();
-	return xmlhttp.responseText;
-    },
-    
-    /**
-       utility function that converts url vars into a js associative array
-    */
-    url_vars_to_array: function(url){
-	var arr_variable = url.split('&');
-	var arr_assoc = {};
-	var i;
-	
-	for(i=0;i<arr_variable.length;i++){
-	    var arr_tmp = arr_variable[i].split('=');
-	    arr_assoc[arr_tmp[0]] = arr_tmp[1];
-	}
-	return arr_assoc;
     }
 };
 
-
-/**
-   Listeners
-
-   initialize the application on startup
-*/
-window.addEventListener("load", function() { vwofChrome.BrowserOverlay.startup(); }, false);
-
-/**
-   Listener that observe the prefs variables
-
-   If the module list changes (new module, module deactivated/activated), the parser list is reloaded
-*/
-var myPrefObserver = {
-    register: function() {
-	// First we'll need the preference services to look for preferences.
-	var prefService = Components.classes["@mozilla.org/preferences-service;1"]
-	    .getService(Components.interfaces.nsIPrefService);
-
-	// For this.branch we ask for the preferences
-	this.branch = prefService.getBranch("extensions.vwof.");
-
-	// Finally add the observer.
-	this.branch.addObserver("", this, false);
-    },
-
-    unregister: function() {
-	this.branch.removeObserver("", this);
-    },
-
-    observe: function(aSubject, aTopic, aData) {
-	switch (aData) {
-	case "modules":
-	    vwofChrome.BrowserOverlay.reload_modules();
-	    break;
-	}
-    }
-}
-myPrefObserver.register();

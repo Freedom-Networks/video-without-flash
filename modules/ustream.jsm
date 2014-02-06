@@ -17,7 +17,7 @@ var parser = {
 	var video_img = cw.document.evaluate(XPATH_VIDEO_IMG, cw.document, null, cw.XPathResult.STRING_TYPE, null).stringValue;
 	var video_uri = URL_AMF.replace('CHANNEL_ID', channel_id);
 
-	var data = vwofChrome.BrowserOverlay.get(video_uri);
+	var data = vwofChrome.utils.get(video_uri);
 	var videos = this.parse_data(data);
 	
 	var player = cw.document.getElementsByClassName("player")[0];

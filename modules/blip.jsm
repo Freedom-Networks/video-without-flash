@@ -41,7 +41,7 @@ var parser = {
 		var encoded_file = script_content.match(/"file":"(.+?)",/)[1];
 		var file = decodeURIComponent(encoded_file);
 		file = file.replace('rss/flash', 'posts/view');
-		var json_string = vwofChrome.BrowserOverlay.get(file+'?skin=json');
+		var json_string = vwofChrome.utils.get(file+'?skin=json');
 		var parse_data = this.parse_json_data(json_string);
 		video_img = parse_data[0];
 		videos = parse_data[1];
@@ -62,7 +62,7 @@ var parser = {
 	var player = cw.document.getElementById('PlayeriFrame');
 	if(!player)return;
 	
-	var json_string = vwofChrome.BrowserOverlay.get(cw.document.URL+'?skin=json');
+	var json_string = vwofChrome.utils.get(cw.document.URL+'?skin=json');
 	var parse_data = this.parse_json_data(json_string);
 	var video_img = parse_data[0];
 	var videos = parse_data[1];

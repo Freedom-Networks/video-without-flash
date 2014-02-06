@@ -5,6 +5,7 @@
   
     <preferences>
       <preference id="extensions.vwof.activate_onload" name="extensions.vwof.activate_onload" type="bool"/>
+      <preference id="plugins.notifyMissingFlash" name="plugins.notifyMissingFlash" type="bool"/>      
       <preference id="full-screen-api.approval-required" name="full-screen-api.approval-required" type="bool"/>
     </preferences>
 

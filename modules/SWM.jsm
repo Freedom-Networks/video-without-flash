@@ -51,7 +51,7 @@ var parser = {
 
 	while (player = xp_res_player.iterateNext()) {
 	    var script = xp_res_script.iterateNext();
-	    var script_content = vwofChrome.BrowserOverlay.get(script.src);
+	    var script_content = vwofChrome.utils.get(script.src);
 
 	    var video_img = script_content.match(REGEX_IMG)[1];
 	    var videos = this.parse_data(script_content);  //get format, type and uri of videos

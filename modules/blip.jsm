@@ -1,5 +1,6 @@
 var parser = {
     BASE_URI: 'blip.tv',
+    URL_PARAM_JSON: '?skin=json&no_wrap=1',
     parse_embed: function(cw) {
 	const XPATH_PLAYER = "//iframe[starts-with(@src, 'http://blip.tv/play')]";
 	var video_info = [];
@@ -35,13 +36,13 @@ var parser = {
 	    }
 	    else{
 		//embed method
-		const XPATH_SCRIPT = "/html/body/script[9]";
+		const XPATH_SCRIPT = "/html/body/script[8]";
 		var script_content = player_doc.evaluate(XPATH_SCRIPT, player_doc, null, cw.XPathResult.STRING_TYPE, null).stringValue;
 		
 		var encoded_file = script_content.match(/"file":"(.+?)",/)[1];
 		var file = decodeURIComponent(encoded_file);
 		file = file.replace('rss/flash', 'posts/view');
-		var json_string = vwofChrome.utils.get(file+'?skin=json');
+		var json_string = vwofChrome.utils.get(file+this.URL_PARAM_JSON);
 		var parse_data = this.parse_json_data(json_string);
 		video_img = parse_data[0];
 		videos = parse_data[1];
@@ -62,7 +63,7 @@ var parser = {
 	var player = cw.document.getElementById('PlayeriFrame');
 	if(!player)return;
 	
-	var json_string = vwofChrome.utils.get(cw.document.URL+'?skin=json');
+	var json_string = vwofChrome.utils.get(cw.document.URL+this.URL_PARAM_JSON);
 	var parse_data = this.parse_json_data(json_string);
 	var video_img = parse_data[0];
 	var videos = parse_data[1];
@@ -77,15 +78,14 @@ var parser = {
     },
 
     parse_json_data: function(json_string){
-	var json_content = json_string.match(/blip_ws_results\((.*)/)[1] + ']';
-	var post = JSON.parse(json_content)[0].Post;
+	var post = JSON.parse(json_string).Post;
 	
 	var videos = [];
 	for(var i=0;i<post.additionalMedia.length;i++){
 	    var format = post.additionalMedia[i].primary_mime_type;
 	    if(format == 'text/plain')continue;
 	    
-	    //remove some part of the mime type (we know it's a video)
+	    //remove video part of the mime type for a prettier display
 	    format=format.replace('video/', '');
 
 	    videos.push({'format': format,

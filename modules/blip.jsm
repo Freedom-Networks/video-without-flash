@@ -35,11 +35,8 @@ var parser = {
 		}
 	    }
 	    else{
-		//embed method
-		const XPATH_SCRIPT = "/html/body/script[8]";
-		var script_content = player_doc.evaluate(XPATH_SCRIPT, player_doc, null, cw.XPathResult.STRING_TYPE, null).stringValue;
-		
-		var encoded_file = script_content.match(/"file":"(.+?)",/)[1];
+		//embed method		
+		var encoded_file = player_doc.body.textContent.match(/"file":"(.+?)",/)[1];
 		var file = decodeURIComponent(encoded_file);
 		file = file.replace('rss/flash', 'posts/view');
 		var json_string = vwofChrome.utils.get(file+this.URL_PARAM_JSON);

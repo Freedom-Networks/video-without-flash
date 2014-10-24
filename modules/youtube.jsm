@@ -39,7 +39,7 @@ var parser = {
 	player_api.appendChild(player);
 	
 	var api_video_uri = this.API_GET_VIDEO.replace('VIDEO_ID', id);
-	var data = vwofChrome.utils.get(api_video_uri);
+	var data = vwofChrome.utils.get(api_video_uri).responseText;
 	var video_data = this.parse_data(data);
 	video_data['player'] = player;
 	
@@ -49,6 +49,12 @@ var parser = {
 	
 	video_info.push(video_data);
 	
+	/*var URL_API_COMMENTS = 'https://apis.google.com/u/0/wm/4/_/widget/render/comments?usegapi=1&first_party_property=YOUTUBE&href='+encodeURIComponent(doc.URL);
+	var comments = vwofChrome.utils.get(URL_API_COMMENTS);
+	var comment_frame = doc.createElement('iframe');
+	comment_frame.src = URL_API_COMMENTS;
+	doc.getElementById('watch-discussion').appendChild(comment_frame);*/
+
 	return video_info;
     },
 
@@ -67,7 +73,7 @@ var parser = {
 
 	    var id = player.src.match(REGEX_VIDEO_ID_IFRAME)[1];
 	    var api_video_uri = this.API_GET_VIDEO.replace('VIDEO_ID', id);
-	    var data = vwofChrome.utils.get(api_video_uri);
+	    var data = vwofChrome.utils.get(api_video_uri).responseText;
 
 	    var parsed_array = this.parse_data(data);
 	    parsed_array['player'] = player;

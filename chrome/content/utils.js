@@ -9,7 +9,7 @@ vwofChrome.utils = {
 	
 	let xmlhttp = XMLHttpRequest("GET", uri, false);
 	xmlhttp.send();
-	return xmlhttp.responseText;
+	return xmlhttp;
     },
     
     /**

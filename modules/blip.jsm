@@ -15,7 +15,7 @@ var parser = {
 	    if(episode_info){
 		//megaplaya method
 		var data_episode_page = episode_info.getAttribute('data-episode-page');
-		var json_string = vwofChrome.utils.get(data_episode_page+this.URL_PARAM_JSON);
+		var json_string = vwofChrome.utils.get(data_episode_page+this.URL_PARAM_JSON).responseText;
 		var parse_data = this.parse_json_data(json_string);
 		video_img = parse_data[0];
 		videos = parse_data[1];		
@@ -25,7 +25,7 @@ var parser = {
 		var encoded_file = player_doc.body.textContent.match(/"file":"(.+?)",/)[1];
 		var file = decodeURIComponent(encoded_file);
 		file = file.replace('rss/flash', 'posts/view');
-		var json_string = vwofChrome.utils.get(file+this.URL_PARAM_JSON);
+		var json_string = vwofChrome.utils.get(file+this.URL_PARAM_JSON).responseText;
 		var parse_data = this.parse_json_data(json_string);
 		video_img = parse_data[0];
 		videos = parse_data[1];
@@ -46,7 +46,7 @@ var parser = {
 	var player = cw.document.getElementById('PlayeriFrame');
 	if(!player)return;
 	
-	var json_string = vwofChrome.utils.get(cw.document.URL+this.URL_PARAM_JSON);
+	var json_string = vwofChrome.utils.get(cw.document.URL+this.URL_PARAM_JSON).responseText;
 	var parse_data = this.parse_json_data(json_string);
 	var video_img = parse_data[0];
 	var videos = parse_data[1];
@@ -72,7 +72,8 @@ var parser = {
 	    format=format.replace('video/', '');
 
 	    videos.push({'format': format,
-			 'quality': post.additionalMedia[i].media_width + '/' + post.additionalMedia[i].media_height,
+			 'quality': post.additionalMedia[i].media_width + '/' + 
+			            post.additionalMedia[i].media_height,
 			 'url':post.additionalMedia[i].url}
 		       );
 	}

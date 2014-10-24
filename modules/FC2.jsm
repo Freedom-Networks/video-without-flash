@@ -38,7 +38,7 @@ var parser = {
 	api_video_uri = api_video_uri.replace('MIMI', md5sum);
 	api_video_uri = api_video_uri.replace('GK', gk.join(''));
 	
-	var data = vwofChrome.utils.get(api_video_uri);
+	var data = vwofChrome.utils.get(api_video_uri).responseText;
 	//extract the video url (filepath) from the data
 	var assoc_data = vwofChrome.utils.url_vars_to_array(data);
 	var filepath = assoc_data['filepath'];

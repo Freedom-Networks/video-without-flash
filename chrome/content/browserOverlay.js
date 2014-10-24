@@ -83,14 +83,16 @@ vwofChrome.BrowserOverlay = {
 			video_data[i]['source'] = key_parser;
 		    }
 		    
-		    video_info = video_info.concat(video_data);    //concat the chunks of video(s) from this parser
+		    //concat the chunks of video(s) from this parser
+		    video_info = video_info.concat(video_data);    
 		}
 	    }
 	    catch(err){
 		console.error("vwof plugin, exception in parser "+key_parser+": "+err);
 	    };
 
-	    //official web sites do not embed several videos, so don't use other parsers
+	    //video web sites never have several videos on a same page, 
+	    //stop the search if a hit was found
 	    if(has_parsed_site){break;}
 	}
 
@@ -142,14 +144,10 @@ window.addEventListener("load", function() { vwofChrome.BrowserOverlay.startup()
 */
 var myPrefObserver = {
     register: function() {
-	// First we'll need the preference services to look for preferences.
+	// load preference service
 	var prefService = Components.classes["@mozilla.org/preferences-service;1"]
 	    .getService(Components.interfaces.nsIPrefService);
-
-	// For this.branch we ask for the preferences
 	this.branch = prefService.getBranch("extensions.vwof.");
-
-	// Finally add the observer.
 	this.branch.addObserver("", this, false);
     },
 

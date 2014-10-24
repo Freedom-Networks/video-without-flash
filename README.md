@@ -60,7 +60,7 @@ For licensing reasons firefox do not support at the moment the H264 codec, altho
 <i>Do not esitate to fork and add your own parser</i>
 
 * Step 1 : Add the name of your parser without the .jsm extension in the browser variable "extensions.vwof.modules" you can do it with about:config for test purposes or do it permanently in src/defaults/preferenes/vwof.js
-The boolean value (parsername:1) is eather if your parser is activated or not. 
+The boolean value (parsername:1) indicate the activation or not by default of the plugin (it can be set mannually by the user in the preference pane). 
 
 
 * Step 2 : Create a jsm file in the modules directory
@@ -125,11 +125,11 @@ This plugin comes with a home made makefile based on mozilla school xul example.
 Targets are : 
 
 * make
-  Create an .xpi in the ../bin directory (manually create ../bin if necessary)
+  Create an .xpi in the ../bin/build directory (manually create ../bin/build if necessary)
 
 * make install
   install the plugin in the profil directory. By default the profil name is "devel"
-  you can change this behaviour by passing the profile_dir variable (example : make install profile_dir default)
+  you can change this behaviour by passing the profile_dir variable (example : make install profile_dir=default)
 
 * you need to restart firefox to apply the changes, it can be done with the make target
   make rerun

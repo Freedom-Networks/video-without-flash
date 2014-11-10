@@ -6,7 +6,7 @@ var parser = {
     parse_site:function(cw) {
 	const REGEX_VIDEO_ID_SITE = /content\/(\w+)/;
 	const XPATH_VIDEO_IMG = '/html/head/meta[@property="og:image"]/@content';
-	var doc = cw.document;
+	const doc = cw.document;
 	var video_info = [];
 	var id;
 

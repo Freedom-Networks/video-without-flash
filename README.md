@@ -10,12 +10,10 @@ Firefox extension for watching videos without the flash plugin
 <ul>
 <li>Youtube</li>
 <li>Blip</li>
-<li>ScreenWaveMedia</li>
-<li>Dew</li>
 <li>HTML5</li>
-<li>Springboard</li>
 <li>Dailymotion</li>
-<li>UStream </li>
+<li>NicoVideo</li>
+<li>FC2</li>
 </ul>
 
 Due to some minor variations of providing the video by a same media provider (different version of there player, use of the embed tag) a few videos may not be detected. 

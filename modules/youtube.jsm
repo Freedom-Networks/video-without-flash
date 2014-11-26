@@ -48,12 +48,6 @@ var parser = {
 	if(guide)guide.style.display = 'none';
 	
 	video_info.push(video_data);
-	
-	/*var URL_API_COMMENTS = 'https://apis.google.com/u/0/wm/4/_/widget/render/comments?usegapi=1&first_party_property=YOUTUBE&href='+encodeURIComponent(doc.URL);
-	var comments = vwofChrome.utils.get(URL_API_COMMENTS);
-	var comment_frame = doc.createElement('iframe');
-	comment_frame.src = URL_API_COMMENTS;
-	doc.getElementById('watch-discussion').appendChild(comment_frame);*/
 
 	return video_info;
     },
@@ -104,15 +98,6 @@ var parser = {
 	    decoded_uri += '&signature='+assoc_url_decoded_fmt_stream['sig'];    //add the signature to the decoded url
 	    var type = decodeURIComponent(assoc_url_decoded_fmt_stream['type']);
 	    var quality = decodeURIComponent(assoc_url_decoded_fmt_stream['quality']);
-
-	    //small is replaced by low so the prefered format can detect the quality
-	    if(quality == 'small')quality = 'low';
-	    //remove some part of the mime type (we know it's a video)
-	    //we want to display only the type and codecs
-	    if(type){
-		type=type.replace('video/', '');
-		type=type.replace(/;\+codecs="(.+)"/, '($1)');
-	    }
 	    
 	    videos.push( {'quality': quality, 'format':type, 'url':decoded_uri} );
 	}

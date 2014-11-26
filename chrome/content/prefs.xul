@@ -5,6 +5,7 @@
   
     <preferences>
       <preference id="extensions.vwof.activate_onload" name="extensions.vwof.activate_onload" type="bool"/>
+      <preference id="plugins.notifyMissingFlash" name="plugins.notifyMissingFlash" type="bool"/>
       <preference id="full-screen-api.approval-required" name="full-screen-api.approval-required" type="bool"/>
     </preferences>
 
@@ -50,7 +51,7 @@
       <preference id="extensions.vwof.modules" name="extensions.vwof.modules" type="string"/>
     </preferences>
  
-    <checkbox id="vwof_yt_wide" label="YouTube large player" oncommand="vwofChrome.youtubeUtils.toggle_yt_wide(event)"/>
+    <checkbox id="vwof_yt_wide" label="YouTube theater mode" oncommand="vwofChrome.youtubeUtils.toggle_yt_wide(event)"/>
     <!--button label="Reload modules" oncommand="vwofChrome.BrowserOverlay.reload_modules()"/-->     
   </prefpane>
   

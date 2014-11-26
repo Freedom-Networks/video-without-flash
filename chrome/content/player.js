@@ -21,25 +21,28 @@ vwofPlayer = {
     */
     video_selector_click:function(event){
 	const doc = event.originalTarget.ownerDocument;
-        var player_style_size = 'min-width:'+this.clientWidth+'px;min-height:'+this.clientHeight+'px;';
+	var player_style_size = 'min-width:'+this.clientWidth+'px;min-height:'+this.clientHeight+'px;';
 
-	var i = document.createElement('iframe');
-	i.setAttribute('id', 'vwof_frame_'+this.id);
-	i.setAttribute('class', 'vwof_frame');
-	i.setAttribute('style', player_style_size);
+	//get the currently selected video link in the video selector
+	var l=doc.getElementById('vwof_link_new_tab_'+this.id);
+	var url = l.href;
 
-	var e = doc.getElementById('vwof_select_video_'+this.id);
-	if(e){
-	    i.setAttribute('src', e.options[e.selectedIndex].value);
-	}
-	else{
-	    var l=doc.getElementById('vwof_link_new_tab_'+this.id);
-	    i.setAttribute('src', l.href);
-	}
+	node_playback = doc.createElement('video');
+	node_playback.setAttribute('controls', 'controls');
 
-	//replace the video selector with the frame
+	var node_source = doc.createElement('source');
+	node_source.setAttribute('src', url);
+	
+	node_playback.appendChild(node_source);	    
+
+	node_playback.setAttribute('style', player_style_size);
+	node_playback.setAttribute('height', '100%');
+	node_playback.setAttribute('width', '100%');	
+	
+
+	//replace the video selector with the playback node
 	var video_selector_parent = this.parentNode;
-	video_selector_parent.replaceChild(i, this);
+	video_selector_parent.replaceChild(node_playback, this);
     },
     /**
        Create the html code to embed the video selector in the document

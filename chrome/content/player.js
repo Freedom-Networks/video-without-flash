@@ -16,29 +16,24 @@ vwofPlayer = {
     },
     /**
        callback function called when the video selector is clicked
-       replace the video selector with a frame pointing to the selected video
-       firefox will set the content of the frame with it's HTML5 video player
+       replace the video selector with a video 
     */
     video_selector_click:function(event){
 	const doc = event.originalTarget.ownerDocument;
-	var player_style_size = 'min-width:'+this.clientWidth+'px;min-height:'+this.clientHeight+'px;';
 
 	//get the currently selected video link in the video selector
 	var l=doc.getElementById('vwof_link_new_tab_'+this.id);
 	var url = l.href;
 
+	//create the video element
 	node_playback = doc.createElement('video');
+	node_playback.setAttribute('height', '100%');
+	node_playback.setAttribute('width', '100%');
 	node_playback.setAttribute('controls', 'controls');
 
 	var node_source = doc.createElement('source');
 	node_source.setAttribute('src', url);
-	
 	node_playback.appendChild(node_source);	    
-
-	node_playback.setAttribute('style', player_style_size);
-	node_playback.setAttribute('height', '100%');
-	node_playback.setAttribute('width', '100%');	
-	
 
 	//replace the video selector with the playback node
 	var video_selector_parent = this.parentNode;
@@ -71,7 +66,7 @@ vwofPlayer = {
 	var video_selector = doc.createElement('div');
 	video_selector.setAttribute('class', 'vwof_player');
 	
-	//identify the div player if the original element did not have an id
+	//identify this video selector if the original element did not have an id
 	if(!video_selector.id)video_selector.setAttribute('id', video_selector_id);
 	
 	//thumbnail
@@ -87,8 +82,8 @@ vwofPlayer = {
 	//select video format and quality
 	var prefered_index = 0;
 	
-	//if the number of video found for this video selector is only one, do
-	//not display the selectbox and append a simple text
+	//if only one video format/quality for this video is detected, do not
+	//display the selectbox but text with the format/quality
 	if(video_info.videos.length == 1){
 	    var node_span = doc.createElement('span');
 	    node_span.setAttribute('class', 'vwof_video_info');
@@ -100,8 +95,10 @@ vwofPlayer = {
 	    video_selector.appendChild(node_span);
 	}
 	else{
+	    //several format/quality detected for this video
 	    prefered_index = this.find_prefered_video(video_info.videos);
 
+	    //creates a select node to display and select all available quality
 	    var node_select = doc.createElement('select');
 	    node_select.setAttribute('id', 'vwof_select_video_'+ video_selector_id);
 	    node_select.setAttribute('class', 'vwof_video_info');
@@ -109,13 +106,7 @@ vwofPlayer = {
 		event.stopPropagation();
 	    });
 
-	    //update the open in a new tab link when the selectbox index changes
-	    node_select.addEventListener('change', function(event){
-		var doc = this.ownerDocument;
-		var link = doc.getElementById('vwof_link_new_tab_'+video_selector_id);
-		link.setAttribute('href', this.options[this.selectedIndex].value);
-	    });
-
+	    //add the options to the selectbox
 	    for(var i=0;i<video_info.videos.length;i++){
 		var node_option = doc.createElement('option');
 		node_option.setAttribute('value', video_info.videos[i].url);
@@ -130,10 +121,22 @@ vwofPlayer = {
 		
 		node_option.appendChild(node_option_content);
 		node_select.appendChild(node_option);
-		video_selector.appendChild(node_select);
 	    }
+
+	    //add the select to the video selector
+	    video_selector.appendChild(node_select);
+	    
+	    //update the open in a new tab link when the selectbox index changes
+	    node_select.addEventListener('change', function(event){
+		var doc = this.ownerDocument;
+		var link = doc.getElementById('vwof_link_new_tab_'+video_selector_id);
+		link.setAttribute('href', this.options[this.selectedIndex].value);
+	    });
+	    
 	}
 
+	//callback function when the video selector is clicked
+	//replace the video selector by the actual video to be played
 	video_selector.addEventListener('click', this.video_selector_click);
 	
 	//open in a new tab link
@@ -187,7 +190,8 @@ vwofPlayer = {
 	    }
 	}
 
-	//return the first candidat, or if no candidate the video in the middle of the list
+	//return the first candidat if only one video is detected
+	//if no valide candidate, return the video in the middle of the list
 	var index = candidate.length > 0 ? candidate[0] : Math.floor(videos.length / 2);
 	return index;
     }
